@@ -1,0 +1,12 @@
+# tf model save
+*.index
+*.meta
+*.data-*
+checkpoint
+
+# python binaries
+*.pyc
+
+# data
+*.txt
+*.csv
