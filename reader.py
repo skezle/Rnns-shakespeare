@@ -58,24 +58,14 @@ def shuffled_ptb_iterator(raw_data, batch_size, num_steps):
     ## randomly take a section of the data and delete it
     if r:
         n = np.random.randint(0, r)
-        raw_data = raw_data[n:n + len(raw_data) - r]
+        raw_data = raw_data[n:n + len(raw_data) - r] ## one long vector
 
-    print("raw_data: {}".format(raw_data.shape)) ## one long vector
     ##raw_data = np.reshape(raw_data, [-1, num_steps]) ## (x, num_steps)
     raw_data = np.reshape(raw_data, [-1, num_steps + 1]) ## +1 added to make this work
     np.random.shuffle(raw_data)
 
-    print("raw_data shape {}".format(raw_data.shape))
-
     num_batches = int(np.ceil(len(raw_data) / batch_size))
 
-    print("num_batches: {}".format(num_batches))
-
     for i in range(num_batches):
-        ##print("from: {}".format(i*batch_size))
-        ##print("to: {}".format(min(len(raw_data), (i+1)*batch_size)))
         data = raw_data[i*batch_size:min(len(raw_data), (i+1)*batch_size),:]
-        ##print("data shape: {}".format(data.shape))
-        ##print("1st: {}".format(data[:,:-1]))
-        ##print("2nd: {}".format(data[:,1:]))
         yield (data[:,:-1], data[:,1:])

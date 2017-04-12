@@ -199,4 +199,5 @@ if __name__ == '__main__':
     print("It took", time.time() - t, "seconds to train for 3 epochs.")
     print("Last epoch loss: {}".format(losses[-1]))
     print("Generating new sentences...")
-    generate_characters(g, "LSTM_3_epochs", 750, prompt='A', pick_top_chars=5)
+    g = build_graph(num_classes = vocab_size, cell_type='LSTM', num_steps=1, batch_size=1)
+    generate_characters(g, "./LSTM_3_epochs", 750, prompt='A', pick_top_chars=5)
