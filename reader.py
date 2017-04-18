@@ -52,13 +52,13 @@ def shuffled_ptb_iterator(raw_data, batch_size, num_steps):
     Takes the raw data and arranges in such a way that one can feed it into
     our RNN with the appropriate batch_size and num_steps
     """
-    print("batch_size: {}".format(batch_size))
-    print("num_steps: {}".format(num_steps))
+    ##print("batch_size: {}".format(batch_size))
+    ##print("num_steps: {}".format(num_steps))
     raw_data = np.array(raw_data, dtype=np.int32)
     ##r = len(raw_data) % num_steps
-    print("shape of raw data: {}".format(raw_data.shape))
+    ##print("shape of raw data: {}".format(raw_data.shape))
     r = len(raw_data) % (num_steps + 1) ## used to be +1 to make this work
-    print("r: {}".format(r))
+    ##print("r: {}".format(r))
     ## randomly take a section of the data and delete it
     if r:
         n = np.random.randint(0, r)
@@ -66,16 +66,16 @@ def shuffled_ptb_iterator(raw_data, batch_size, num_steps):
 
     ##raw_data = np.reshape(raw_data, [-1, num_steps]) ## (x, num_steps)
     raw_data = np.reshape(raw_data, [-1, num_steps + 1]) ## +1 added to make this work
-    print("shape of raw data: {}".format(raw_data.shape))
+    ##print("shape of raw data: {}".format(raw_data.shape))
     np.random.shuffle(raw_data)
 
     num_batches = int(np.floor(len(raw_data) / batch_size)) ## changed from int(np.ceil(len(raw_data) / batch_size))
-    print("num_batches: {}".format(num_batches))
+    ##print("num_batches: {}".format(num_batches))
 
     for i in range(num_batches):
-        print("lower: {}".format(i*batch_size))
-        print("upper: {}".format(min(len(raw_data), (i+1)*batch_size)))
+        ##print("lower: {}".format(i*batch_size))
+        ##print("upper: {}".format(min(len(raw_data), (i+1)*batch_size)))
         data = raw_data[i*batch_size:min(len(raw_data), (i+1)*batch_size),:]
-        print("yield 1: {}".format(data[:,:-1].shape))
-        print("yield 2: {}".format(data[:,1:].shape))
+        ##print("yield 1: {}".format(data[:,:-1].shape))
+        ##print("yield 2: {}".format(data[:,1:].shape))
         yield (data[:,:-1], data[:,1:])

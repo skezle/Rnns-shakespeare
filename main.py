@@ -69,9 +69,9 @@ def train_network(g, num_epochs, num_steps = 200, batch_size = 32, verbose = Tru
             training_state = None
             for X, Y in epoch:
                 steps += 1
-                print("steps: {}".format(steps))
-                print("X shape: {}".format(X.shape))
-                print("Y shape: {}".format(Y.shape))
+                ##print("steps: {}".format(steps))
+                ##print("X shape: {}".format(X.shape))
+                ##print("Y shape: {}".format(Y.shape))
                 feed_dict={g['x']: X, g['y']: Y}
                 if training_state is not None:
                     feed_dict[g['init_state']] = training_state
@@ -103,12 +103,12 @@ def build_graph(
 
     reset_graph()
 
-    print("batch size: {}".format(batch_size))
-    print("num_steps: {}".format(num_steps))
+    ##print("batch size: {}".format(batch_size))
+    ##print("num_steps: {}".format(num_steps))
     x = tf.placeholder(tf.int32, shape = (batch_size, num_steps), name='input_placeholder')
-    print("x shape: {}".format(x.get_shape()))
+    ##print("x shape: {}".format(x.get_shape()))
     y = tf.placeholder(tf.int32, shape = (batch_size, num_steps), name='labels_placeholder')
-    print("y shape: {}".format(y.get_shape()))
+    ##print("y shape: {}".format(y.get_shape()))
 
     dropout = tf.constant(1.0)
 
@@ -197,9 +197,9 @@ if __name__ == '__main__':
     g = build_graph(num_classes = vocab_size, cell_type='LSTM', num_steps=80)
     t = time.time()
     print("Training network")
-    losses = train_network(g, save="LSTM_10_epochs", num_epochs=10, num_steps=80)
-    print("It took", time.time() - t, "seconds to train for 10 epochs.")
+    losses = train_network(g, save="LSTM_20_epochs", num_epochs=20, num_steps=80)
+    print("It took", time.time() - t, "seconds to train for 20 epochs.")
     print("Last epoch loss: {}".format(losses[-1]))
     print("Generating new sentences...")
     g = build_graph(num_classes = vocab_size, cell_type='LSTM', num_steps=1, batch_size=1)
-    generate_characters(g, "./LSTM_10_epochs", 750, prompt='A', pick_top_chars=5)
+    generate_characters(g, "./LSTM_20_epochs", 750, prompt='A', pick_top_chars=5)
