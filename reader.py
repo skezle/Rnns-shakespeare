@@ -1,5 +1,6 @@
 import numpy as np
 
+## https://gist.github.com/spitis/2dd1720850154b25d2cec58d4b75c4a0
 
 ###############################################################
 ##################### Doesnt work!!! ##########################
@@ -51,9 +52,12 @@ def shuffled_ptb_iterator(raw_data, batch_size, num_steps):
     Takes the raw data and arranges in such a way that one can feed it into
     our RNN with the appropriate batch_size and num_steps
     """
+    print("batch_size: {}".format(batch_size))
+    print("num_steps: {}".format(num_steps))
     raw_data = np.array(raw_data, dtype=np.int32)
     ##r = len(raw_data) % num_steps
-    r = len(raw_data) % (num_steps + 1) ## +1 to make this work
+    print("shape of raw data: {}".format(raw_data.shape))
+    r = len(raw_data) % (num_steps + 1) ## used to be +1 to make this work
     print("r: {}".format(r))
     ## randomly take a section of the data and delete it
     if r:
@@ -62,6 +66,7 @@ def shuffled_ptb_iterator(raw_data, batch_size, num_steps):
 
     ##raw_data = np.reshape(raw_data, [-1, num_steps]) ## (x, num_steps)
     raw_data = np.reshape(raw_data, [-1, num_steps + 1]) ## +1 added to make this work
+    print("shape of raw data: {}".format(raw_data.shape))
     np.random.shuffle(raw_data)
 
     num_batches = int(np.ceil(len(raw_data) / batch_size))
