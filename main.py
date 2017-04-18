@@ -70,6 +70,8 @@ def train_network(g, num_epochs, num_steps = 200, batch_size = 32, verbose = Tru
             for X, Y in epoch:
                 steps += 1
                 print("steps: {}".format(steps))
+                print("X shape: {}".format(X.shape))
+                print("Y shape: {}".format(Y.shape))
                 feed_dict={g['x']: X, g['y']: Y}
                 if training_state is not None:
                     feed_dict[g['init_state']] = training_state

@@ -65,7 +65,10 @@ def shuffled_ptb_iterator(raw_data, batch_size, num_steps):
     np.random.shuffle(raw_data)
 
     num_batches = int(np.ceil(len(raw_data) / batch_size))
+    print("num_batches: {}".format(num_batches))
 
     for i in range(num_batches):
         data = raw_data[i*batch_size:min(len(raw_data), (i+1)*batch_size),:]
+        print("yield 1: {}".format(data[:,:-1].shape))
+        print("yield 2: {}".format(data[:,1:].shape))
         yield (data[:,:-1], data[:,1:])
